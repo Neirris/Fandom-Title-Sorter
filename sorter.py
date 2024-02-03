@@ -73,7 +73,7 @@ async def sort_async(filenames_list, sem, path_input, path_output, path_dict, is
                 to_remove.clear()
                 for p in curr_p:
                     if p.is_alive():
-                        if time.time() - process_life_timer[p] > 600:
+                        if time.time() - process_life_timer[p] > 60:
                             terminate_child_process(p)
                             p.join(timeout=1)
                             if p.is_alive():
