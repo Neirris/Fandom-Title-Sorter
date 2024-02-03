@@ -2,9 +2,8 @@ import os
 import asyncio
 
 from PySide6.QtWidgets import *
-from PySide6.QtCore import QDir, Qt, QFileInfo, QSettings, QThread, Signal, QTimer, QFileSystemWatcher
+from PySide6.QtCore import QDir, Qt, QFileInfo, QSettings, QThread, Signal, QTimer
 from PySide6.QtGui import QPixmap, QFont, QImage, QTextOption
-
 
 from sorter import sort_main, stop_sort
 from file_processing import create_temp_folder, initialize_dict
@@ -170,13 +169,14 @@ class MainWindow(QWidget):
         self.path_output.editingFinished.emit()
         
         if self.settings.value("is_sep_chars") is None:
-            self.settings.setValue("is_sep_chars", False)
-        if self.settings.value("is_dl_images") is None:
-            self.settings.setValue("is_dl_images", False)
+            self.settings.setValue("is_sep_chars", "False")
             
-        self.is_sep_chars = eval(self.settings.value("is_sep_chars"))
-        self.is_dl_images = eval(self.settings.value("is_dl_images"))
-        
+        if self.settings.value("is_dl_images") is None:
+            self.settings.setValue("is_dl_images", "False")
+
+        self.is_sep_chars = self.settings.value("is_sep_chars") == "True"
+        self.is_dl_images = self.settings.value("is_dl_images") == "True"
+                     
         self.settings_dialog.checkbox_sep_chars.setChecked(self.is_sep_chars)
         self.settings_dialog.checkbox_dl_images.setChecked(self.is_dl_images)
         
